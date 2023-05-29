@@ -16,7 +16,7 @@ model personajes {
   id                      Int                       @id @default(autoincrement())
   nombre                  String
   fuerza                  Int
-  fecha_nacimiento        DateTime
+  fecha_nacimiento        DateTime                  @db.Date
   objeto                  String?
   personaje_tiene_trabajo personaje_tiene_trabajo[]
   pesonaje_habita_reino   pesonaje_habita_reino[]
@@ -44,8 +44,8 @@ model personaje_tiene_trabajo {
   personajes    personajes @relation(fields: [personajesId], references: [id])
   personajesId  Int
   trabajosId    Int
-  fecha_inicio  DateTime
-  fecha_termino DateTime
+  fecha_inicio  DateTime   @db.Date
+  fecha_termino DateTime   @db.Date
 
   @@id([personajesId, trabajosId])
 }

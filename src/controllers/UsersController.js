@@ -1,32 +1,33 @@
 import prisma from '../prismaClient.js'
 
-const getUsers = async (req , res) => {
-    const users = await prisma.user.findMany()
-    res.json(users)
+const getPj = async (req , res) => {
+    const personajes = await prisma.personajes.findMany()
+    res.json(personajes)
 }
 
 
-const getUserById = async (req, res) => {
+const getPjById = async (req, res) => {
     const { id } = req.params
-    const user = await prisma.user.findUnique({
+    const user = await prisma.personajes.findUnique({
         where: {
             id: Number(id)
         }
     })
-    res.json(user)
+    res.json(personajes)
 }
 
 
-const createUser = async (req, res) => {
-    const { name, email, lastame } = req.body
-    const user = await prisma.user.create({
-        data: {
-            name,
-            email,
-            lastame
+const createPj = async (req, res) => {
+    const {nombre,fuerza, fecha_nacimiento, objeto} = req.body
+    const personajes = await prisma.personajes.create({
+        data :{
+            nombre,
+            fuerza,
+            fecha_nacimiento,
+            objeto,
         }
     })
-    res.json(user)
+    res.json(personajes)
 }
 
 const usersPosts = async (req, res) => {
@@ -44,9 +45,9 @@ const usersPosts = async (req, res) => {
 
             
 const UsersController = {
-    getUsers,
-    getUserById,
-    createUser, 
+    getPj,
+    getPjById,
+    createPj, 
     usersPosts
 }
 

@@ -2,6 +2,7 @@ import express from 'express';
 import UsersController from './controllers/UsersController.js';
 import morgan from 'morgan';
 import postController from './controllers/PostsController.js';
+
 const ENV = process.env;
 const app = express();
 
@@ -10,10 +11,13 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 //endpoints(Routes)
-app.get('/users', UsersController.getUsers)
-app.get('/users/:id', UsersController.getUserById)
-app.post('/users', UsersController.createUser)
-app.get('/users/:id/posts', UsersController.usersPosts)
+app.get('/personajes', UsersController.getPJ)
+app.get('/personajes/:id', UsersController.getPjById)
+
+app.post('/personajes', UsersController.createPj)
+
+    
+app.get('/personajes/:id', UsersController.usersPosts)
 
 app.get("/posts", postController.getPosts)
 //==========================================================//
