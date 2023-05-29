@@ -11,13 +11,13 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 //endpoints(Routes)
-app.get('/personajes', UsersController.getPJ)
+app.get('/personajes', UsersController.getPj)
 app.get('/personajes/:id', UsersController.getPjById)
 
 app.post('/personajes', UsersController.createPj)
-
-    
-app.get('/personajes/:id', UsersController.usersPosts)
+app.put('/personajes/:id', UsersController.updatePj)
+app.delete('/personajes/:id', UsersController.deletePj)
+//app.get('/personajes/:id', UsersController.usersPosts)
 
 app.get("/posts", postController.getPosts)
 //==========================================================//

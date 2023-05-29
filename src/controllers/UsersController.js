@@ -5,17 +5,15 @@ const getPj = async (req , res) => {
     res.json(personajes)
 }
 
-
 const getPjById = async (req, res) => {
     const { id } = req.params
-    const user = await prisma.personajes.findUnique({
+    const personajes = await prisma.personajes.findUnique({
         where: {
             id: Number(id)
         }
     })
     res.json(personajes)
 }
-
 
 const createPj = async (req, res) => {
     const {nombre,fuerza, fecha_nacimiento, objeto} = req.body
@@ -29,6 +27,29 @@ const createPj = async (req, res) => {
     })
     res.json(personajes)
 }
+
+const updatePj = async (req, res) => {
+    const {id} = req.params
+    const update = await prisma.personajes.update({
+        where: {
+            id: Number(id)
+        },
+        data: req.body
+    })
+    res.json(update)
+}
+
+const deletePj = async (req, res) => {
+    const {id} = req.params
+    const deletepj = await prisma.personajes.delete({
+        where: {
+            id: Number(id)
+        }
+    })
+    res.json(deletepj)
+}
+
+
 
 const usersPosts = async (req, res) => {
     const { id } = req.params
@@ -48,7 +69,9 @@ const UsersController = {
     getPj,
     getPjById,
     createPj, 
-    usersPosts
+    usersPosts,
+    updatePj,
+    deletePj
 }
 
 export default UsersController
