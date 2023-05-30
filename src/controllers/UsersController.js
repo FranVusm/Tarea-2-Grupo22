@@ -1,10 +1,10 @@
 import prisma from '../prismaClient.js'
-
+//Todos los personajes
 const getPj = async (req , res) => {
     const personajes = await prisma.personajes.findMany()
     res.json(personajes)
 }
-
+//personajes por id doy una id que no exista que pasa... 
 const getPjById = async (req, res) => {
     const { id } = req.params
     const personajes = await prisma.personajes.findUnique({
@@ -14,7 +14,7 @@ const getPjById = async (req, res) => {
     })
     res.json(personajes)
 }
-
+//creador de personaje, que no el body necesario
 const createPj = async (req, res) => {
     const {nombre,fuerza, fecha_nacimiento, objeto} = req.body
     const personajes = await prisma.personajes.create({
@@ -27,7 +27,7 @@ const createPj = async (req, res) => {
     })
     res.json(personajes)
 }
-
+//update de personaje, si no existe la id ...
 const updatePj = async (req, res) => {
     const {id} = req.params
     const update = await prisma.personajes.update({
@@ -38,7 +38,7 @@ const updatePj = async (req, res) => {
     })
     res.json(update)
 }
-
+//delete de personaje, si no existe la id que pasa...
 const deletePj = async (req, res) => {
     const {id} = req.params
     const deletepj = await prisma.personajes.delete({
@@ -48,8 +48,6 @@ const deletePj = async (req, res) => {
     })
     res.json(deletepj)
 }
-
-
 
 const usersPosts = async (req, res) => {
     const { id } = req.params

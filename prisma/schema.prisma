@@ -51,7 +51,7 @@ model personaje_tiene_trabajo {
 }
 
 model reinos {
-  id                    Int                     @id @default(autoincrement())
+  id                    Int                     @id @default(autoincrement()) //pk
   nombre                String
   ubicacion             String
   superficie            Int
@@ -79,7 +79,7 @@ model diplomacias {
   reinos2    Int
   es_alieado Boolean
 
-  @@id([reinos1, reinos2])
+  @@id([reinos1, reinos2]) //fk 
 }
 
 model defensas {

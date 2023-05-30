@@ -12,6 +12,7 @@ app.use(morgan('dev'));
 
 //endpoints(Routes)
 app.get('/personajes', UsersController.getPj)
+
 app.get('/personajes/:id', UsersController.getPjById)
 
 app.post('/personajes', UsersController.createPj)

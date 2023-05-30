@@ -5,6 +5,7 @@ const prisma = new PrismaClient()
 
 
 export default prisma
+
 /*const deleate = await prisma.personajes.deleteMany()
 const createMany = await prisma.personajes.createMany({
     data: [
