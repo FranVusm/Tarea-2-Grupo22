@@ -14,10 +14,10 @@ datasource db {
 
 model personajes {
   id                      Int                       @id @default(autoincrement())
-  nombre                  String
+  nombre                  String                    @db.VarChar(45)
   fuerza                  Int
   fecha_nacimiento        DateTime                  @db.Date
-  objeto                  String?
+  objeto                  String?                   @db.VarChar(30)
   personaje_tiene_trabajo personaje_tiene_trabajo[]
   pesonaje_habita_reino   pesonaje_habita_reino[]
   karts                   karts[]
@@ -25,8 +25,8 @@ model personajes {
 
 model karts {
   id               Int         @id @default(autoincrement())
-  modelo           String
-  color            String
+  modelo           String      @db.VarChar(45)
+  color            String      @db.VarChar(45)
   velocidad_maxima Int?
   id_personaje     personajes? @relation(fields: [personajesId], references: [id])
   personajesId     Int?
@@ -34,14 +34,14 @@ model karts {
 
 model trabajos {
   id                      Int                       @id @default(autoincrement())
-  descripcion             String?
+  descripcion             String?                   @db.VarChar(45)
   sueldo                  Int
   personaje_tiene_trabajo personaje_tiene_trabajo[]
 }
 
 model personaje_tiene_trabajo {
   id_trabajo    trabajos   @relation(fields: [trabajosId], references: [id])
-  personajes    personajes @relation(fields: [personajesId], references: [id])
+  id_personaje    personajes @relation(fields: [personajesId], references: [id])
   personajesId  Int
   trabajosId    Int
   fecha_inicio  DateTime   @db.Date
@@ -52,8 +52,8 @@ model personaje_tiene_trabajo {
 
 model reinos {
   id                    Int                     @id @default(autoincrement()) //pk
-  nombre                String
-  ubicacion             String
+  nombre                String                  @db.VarChar(45)
+  ubicacion             String                  @db.VarChar(45)
   superficie            Int
   pesonaje_habita_reino pesonaje_habita_reino[]
   diplomacias           diplomacias[]           @relation("reino 1")
@@ -85,5 +85,5 @@ model diplomacias {
 model defensas {
   id      Int      @id @default(autoincrement())
   reinos  reinos[]
-  defensa String
+  defensa String   @db.VarChar(45)
 }

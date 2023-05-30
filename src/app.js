@@ -1,8 +1,10 @@
 import express from 'express';
-import UsersController from './controllers/UsersController.js';
+import PjController from './controllers/PjController.js';
 import morgan from 'morgan';
 import postController from './controllers/PostsController.js';
-
+import TraController from './controllers/TraController.js';
+import KarsController from './controllers/KarsController.js';
+import PjTraController from './controllers/PjTraController.js';
 const ENV = process.env;
 const app = express();
 
@@ -11,16 +13,19 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 //endpoints(Routes)
-app.get('/personajes', UsersController.getPj)
-
-app.get('/personajes/:id', UsersController.getPjById)
-
-app.post('/personajes', UsersController.createPj)
-app.put('/personajes/:id', UsersController.updatePj)
-app.delete('/personajes/:id', UsersController.deletePj)
-//app.get('/personajes/:id', UsersController.usersPosts)
-
+app.get('/personajes', PjController.getPj)
+app.get('/personajes/:id', PjController.getPjById)
+app.post('/personajes', PjController.createPj)
+app.put('/personajes/:id', PjController.updatePj)
+app.delete('/personajes/:id', PjController.deletePj)
+// Trabajos
+app.get('/trabajos', TraController.getTra)
+app.post('/trabajos', TraController.createTrabajo)
+// Karts
+app.post('/karts',KarsController.createKart)
 app.get("/posts", postController.getPosts)
+//PjTra
+app.post('/pjtrabajos', PjTraController.createPjTra)
 //==========================================================//
 app.get('/', (req, res) => {
     res.json({ message: 'Hello World!!' });

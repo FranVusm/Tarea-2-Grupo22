@@ -63,7 +63,7 @@ const usersPosts = async (req, res) => {
 }
 
             
-const UsersController = {
+const PjController = {
     getPj,
     getPjById,
     createPj, 
@@ -72,6 +72,6 @@ const UsersController = {
     deletePj
 }
 
-export default UsersController
+export default PjController
 
 
