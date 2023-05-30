@@ -24,11 +24,32 @@ const createKart = async (req, res) => {
         }
     })
     res.json(kart)
-} 
-
+}
+const updateKart = async (req, res) => {
+    const {id} = req.params
+    const update = await prisma.karts.update({
+        where: {
+            id: Number(id)
+        },
+        data: req.body
+    })
+    res.json(update)
+}
+const deleteKart = async (req, res) => {
+    const {id} = req.params
+    const deleteKart = await prisma.karts.delete({
+        where: {
+            id: Number(id)
+        }
+    })
+    res.json(deleteKart)
+}
 const KarsController = {
     getKart,
     getKartById,
-    createKart
+    createKart,
+    updateKart,
+    deleteKart
 }
+
 export default KarsController

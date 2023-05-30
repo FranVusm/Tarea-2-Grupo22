@@ -77,7 +77,7 @@ model diplomacias {
   reinos1    Int
   id_reino_2 reinos  @relation("reino 2", fields: [reinos2], references: [id])
   reinos2    Int
-  es_alieado Boolean
+  es_aliado Boolean
 
   @@id([reinos1, reinos2]) //fk 
 }
