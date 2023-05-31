@@ -4,10 +4,10 @@ const getPjTra = async (req , res) => {
     res.json(pjtra)
 }
 const getPjTraById = async (req, res) => {
-    const { id } = req.params
+    const {id_tra, id_pj} = req.params
     const pjtra = await prisma.personaje_tiene_trabajo.findUnique({
         where: {
-            id: Number(id)
+            personajesId_trabajosId: {personajesId: Number(id_pj), trabajosId: Number(id_tra)}
         }
     })
     res.json(pjtra)
@@ -25,20 +25,20 @@ const createPjTra = async (req, res) => {
     res.json(personajesTra)
 }
 const updatePjTra = async (req, res) => {
-    const {id} = req.params
+    const {id_pj,id_tra} = req.params
     const update = await prisma.personaje_tiene_trabajo.update({
         where: {
-            id: Number(id)
+            personajesId_trabajosId: {personajesId: Number(id_pj), trabajosId: Number(id_tra)}
         },
         data: req.body
     })
     res.json(update)
 }
 const deletePjTra = async (req, res) => {
-    const {id} = req.params
+    const {id_pj,id_tra} = req.params
     const deletePjTra = await prisma.personaje_tiene_trabajo.delete({
         where: {
-            id: Number(id)
+            personajesId_trabajosId: {personajesId: Number(id_pj), trabajosId: Number(id_tra)}
         }
     })
     res.json(deletePjTra)

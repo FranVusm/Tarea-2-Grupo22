@@ -6,6 +6,7 @@ import KarsController from './controllers/KarsController.js';
 import PjTraController from './controllers/PjTraController.js';
 import ReinosController from './controllers/ReinosController.js';
 import DiploController from './controllers/DiploController.js';
+import PjReinoController from './controllers/PjReinoController.js';
 const ENV = process.env;
 const app = express();
 
@@ -34,9 +35,9 @@ app.delete('/karts/:id', KarsController.deleteKart)
 //PjTra
 app.get('/pjtrabajos',PjTraController.getPjTra)
 app.post('/pjtrabajos', PjTraController.createPjTra)
-app.get('/pjtrabajos/:id', PjTraController.getPjTraById)
-app.put('/pjtrabajos/:id',PjTraController.updatePjTra)
-app.delete('/pjtrabajos/:id', PjTraController.deletePjTra)
+app.get('/pjtrabajos/:id_tra/:id_pj', PjTraController.getPjTraById)
+app.put('/pjtrabajos/:id_tra/:id_pj',PjTraController.updatePjTra)
+app.delete('/pjtrabajos/:id_tra/:id_pj', PjTraController.deletePjTra)
 //Reinos 
 app.get('/reinos',ReinosController.getReino)
 app.post('/reinos', ReinosController.createReino)
@@ -44,12 +45,17 @@ app.get('/reinos/:id', ReinosController.getReinosById)
 app.put('/reinos/:id',ReinosController.updateReino)
 app.delete('/reinos/:id', ReinosController.deleteReinos)
 //diplomacias
-//app.get('/diplomacias',DiploController.getReino)
+app.get('/diplomacias',DiploController.getDiplo)
 app.post('/diplomacias', DiploController.createDiplo)
-//app.get('/diplomacias/:id', DiploController.getReinosById)
-app.put('/diplomacias/:id',DiploController.updateDiplo)
-//app.delete('/diplomacias/:id', DiploController.deleteReinos)
-
+app.get('/diplomacias/:id_1/:id_2', DiploController.getdiploById)
+app.put('/diplomacias/:id_1/:id_2',DiploController.updateDiplo)
+app.delete('/diplomacias/:id', DiploController.deleteDiplo)
+//Pjreino
+app.get('/pjreino',PjReinoController.getPjReino)
+app.post('/pjreino', PjReinoController.createPjReino)
+app.get('/pjreino/:id_1/:id_2', PjReinoController.getPjReinoId)
+app.put('/pjreino/:id_1/:id_2',PjReinoController.updatePjReino)
+app.delete('/pjreino/:id_1/:id_2', PjReinoController.deletePjReino)
 
 
 
