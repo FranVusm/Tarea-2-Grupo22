@@ -13,6 +13,7 @@ const getPjTraById = async (req, res) => {
     res.json(pjtra)
 }
 const createPjTra = async (req, res) => {
+    try{
     const {trabajosId, personajesId,fecha_inicio, fecha_termino} = req.body
     const personajesTra = await prisma.personaje_tiene_trabajo.create({
         data :{
@@ -22,26 +23,37 @@ const createPjTra = async (req, res) => {
             fecha_termino,
         }
     })
-    res.json(personajesTra)
+    res.json(personajesTra)}
+    catch(error){
+        res.status(500).send("error al crear trabajador, favor de revisar los parametros");
+    }
 }
 const updatePjTra = async (req, res) => {
     const {id_pj,id_tra} = req.params
+    try{
     const update = await prisma.personaje_tiene_trabajo.update({
         where: {
             personajesId_trabajosId: {personajesId: Number(id_pj), trabajosId: Number(id_tra)}
         },
         data: req.body
     })
-    res.json(update)
+    res.json(update)}
+    catch(error){
+        res.status(500).send("error al actualizar, favor de revisar los parametros");
+    }
 }
 const deletePjTra = async (req, res) => {
+    try{
     const {id_pj,id_tra} = req.params
     const deletePjTra = await prisma.personaje_tiene_trabajo.delete({
         where: {
             personajesId_trabajosId: {personajesId: Number(id_pj), trabajosId: Number(id_tra)}
         }
     })
-    res.json(deletePjTra)
+    res.json(deletePjTra)}
+    catch(error){
+        res.status(500).send("error al eliminar, favor de revisar los parametros");
+    }
 }
 
 

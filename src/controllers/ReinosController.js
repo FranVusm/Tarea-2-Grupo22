@@ -14,6 +14,7 @@ const getReinosById = async (req, res) => {
     res.json(reinos)
 }
 const createReino = async (req, res) => {
+    try{
     const {nombre,ubicacion, superficie} = req.body
     const reinos = await prisma.reinos.create({
         data :{
@@ -22,9 +23,13 @@ const createReino = async (req, res) => {
             superficie
         }
     })
-    res.json(reinos)
+    res.json(reinos)}
+    catch(error){
+        res.status(500).send("error al crear el Reino, favor de revisar los parametros");
+    }
 }
 const updateReino = async (req, res) => {
+    try{
     const {id} = req.params
     const update = await prisma.reinos.update({
         where: {
@@ -32,16 +37,23 @@ const updateReino = async (req, res) => {
         },
         data: req.body
     })
-    res.json(update)
+    res.json(update)}
+    catch(error){
+        res.status(500).send("error al actualizar, favor de revisar los parametros");
+    }
 }
 const deleteReinos = async (req, res) => {
+    try{
     const {id} = req.params
     const deleteReinos = await prisma.reinos.delete({
         where: {
             id: Number(id)
         }
     })
-    res.json(deleteReinos)
+    res.json(deleteReinos)}
+    catch(error){
+        res.status(500).send("error al eliminar, favor de revisar los parametros");
+    }
 }
 
 

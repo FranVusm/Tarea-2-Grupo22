@@ -7,6 +7,7 @@ import PjTraController from './controllers/PjTraController.js';
 import ReinosController from './controllers/ReinosController.js';
 import DiploController from './controllers/DiploController.js';
 import PjReinoController from './controllers/PjReinoController.js';
+import DefensasController from './controllers/DefensasController.js';
 const ENV = process.env;
 const app = express();
 
@@ -29,9 +30,9 @@ app.delete('/trabajos/:id', TraController.deleteTra)
 // Karts
 app.get('/karts',KarsController.getKart)
 app.post('/karts', KarsController.createKart)
-app.get('/karts/:id', KarsController.getKartById)
-app.put('/karts/:id',KarsController.updateKart)
-app.delete('/karts/:id', KarsController.deleteKart)
+app.get('/karts/:personajesId', KarsController.getKartById)
+app.put('/karts/:personajesId',KarsController.updateKart)
+app.delete('/karts/:personajesId', KarsController.deleteKart)
 //PjTra
 app.get('/pjtrabajos',PjTraController.getPjTra)
 app.post('/pjtrabajos', PjTraController.createPjTra)
@@ -56,7 +57,12 @@ app.post('/pjreino', PjReinoController.createPjReino)
 app.get('/pjreino/:id_1/:id_2', PjReinoController.getPjReinoId)
 app.put('/pjreino/:id_1/:id_2',PjReinoController.updatePjReino)
 app.delete('/pjreino/:id_1/:id_2', PjReinoController.deletePjReino)
-
+//defensas
+app.get('/defensas', DefensasController.GetDef)
+app.get('/defensas/:id_def', DefensasController.GetDefById)
+app.post('/defensas/:id_reino',DefensasController.createDef)
+app.put('/defensas/:id_def', DefensasController.UpdateDef)
+app.delete('/defensas/:id_def', DefensasController.DeleteDef)
 
 
 //==========================================================//
