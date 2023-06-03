@@ -30,9 +30,9 @@ app.delete('/trabajos/:id', TraController.deleteTra)
 // Karts
 app.get('/karts',KarsController.getKart)
 app.post('/karts', KarsController.createKart)
-app.get('/karts/:personajesId', KarsController.getKartById)
-app.put('/karts/:personajesId',KarsController.updateKart)
-app.delete('/karts/:personajesId', KarsController.deleteKart)
+app.get('/karts/:id', KarsController.getKartById)
+app.put('/karts/:id',KarsController.updateKart)
+app.delete('/karts/:id', KarsController.deleteKart)
 //PjTra
 app.get('/pjtrabajos',PjTraController.getPjTra)
 app.post('/pjtrabajos', PjTraController.createPjTra)

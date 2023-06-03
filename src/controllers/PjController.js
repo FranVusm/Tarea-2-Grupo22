@@ -3,25 +3,37 @@ import prisma from '../prismaClient.js'
 const getPj = async (req , res) => {
     
         const personajes = await prisma.personajes.findMany()
-        res.json(personajes)
+        if(personajes.length == 0){
+            res.status(500).send("no se encontro ningún elemento ");
+        }
+        if(personajes.length != 0){
+            res.json(personajes)
+        }
     
    
 }
 //personajes por id doy una id que no exista que pasa... 
 const getPjById = async (req, res) => {
-    try{
+   
         const { id } = req.params
+        
         const personajes = await prisma.personajes.findUnique({
             where: {
                 id: Number(id)
             }
+            
         })
-        res.json(personajes)
-    }
-    catch(error){
-        res.status(500).send("No se encontro ningún personaje con la id proporcionada")
-    }
+        if(personajes != null){
+            res.json(personajes)
+        }
+        else{
+            res.status(500).send("No se encontro ningun personaje con la id proporcionada")
+        }
 }
+    
+       
+   
+ 
 //creador de personaje, que no el body necesario
 const createPj = async (req, res) => {
     try {

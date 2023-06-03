@@ -2,7 +2,12 @@ import prisma from '../prismaClient.js'
 
 const getReino = async (req , res) => {
     const reinos = await prisma.reinos.findMany()
-    res.json(reinos)
+    if(reinos.length == 0){
+        res.status(500).send("no se encontro ningún elemento ");
+    }
+    if(reinos.length != 0){
+        res.json(reinos)
+    }
 }
 const getReinosById = async (req, res) => {
     const { id } = req.params
@@ -11,7 +16,12 @@ const getReinosById = async (req, res) => {
             id: Number(id)
         }
     })
-    res.json(reinos)
+    if(reinos != null){
+        res.json(reinos)
+    }
+    else{
+        res.status(500).send("No se encontro nigún reino con la id proporcionada")
+    }
 }
 const createReino = async (req, res) => {
     try{
@@ -48,12 +58,14 @@ const deleteReinos = async (req, res) => {
     const deleteReinos = await prisma.reinos.delete({
         where: {
             id: Number(id)
-        }
+        },
+        include:{defensas: true, diplomacias: true, diplomacias2: true, pesonaje_habita_reino: true}
     })
     res.json(deleteReinos)}
     catch(error){
         res.status(500).send("error al eliminar, favor de revisar los parametros");
     }
+   
 }
 
 

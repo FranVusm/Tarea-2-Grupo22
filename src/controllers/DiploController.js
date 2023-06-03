@@ -1,7 +1,12 @@
 import prisma from '../prismaClient.js'
 const getDiplo = async (req , res) => {
     const pjtra = await prisma.diplomacias.findMany()
-    res.json(pjtra)
+    if(pjtra.length == 0){
+        res.status(500).send("no se encontro ningún elemento ");
+    }
+    if(pjtra.length != 0){
+        res.json(pjtra)
+    }
 }
 const getdiploById = async (req, res) => {
     
@@ -10,7 +15,12 @@ const getdiploById = async (req, res) => {
         where: 
         {reinos1_reinos2:{reinos1 : Number(id_1), reinos2: Number(id_2) }}
     }) 
-    res.json(diplo)
+    if(diplo != null){
+        res.json(diplo)
+    }
+    else{
+        res.status(500).send("No se encontro diplomacia con las id proporcionadas")
+    }
 }
 const createDiplo = async (req, res) => {
     try{
@@ -25,7 +35,7 @@ const createDiplo = async (req, res) => {
         res.json(diplo)
     }
     catch(error){
-        res.status(500).send("error al crear el kart, favor de revisar los parametros");
+        res.status(500).send("error al crear la diplomacia, favor de revisar los parametros");
     }
 }
 const updateDiplo = async (req, res) => {

@@ -1,7 +1,13 @@
 import prisma from '../prismaClient.js'
 const getPjTra = async (req , res) => {
     const pjtra = await prisma.personaje_tiene_trabajo.findMany()
-    res.json(pjtra)
+    if(pjtra.length == 0){
+        res.status(500).send("no se encontro ningún elemento ");
+    }
+    if(pjtra.length != 0){
+        res.json(pjtra)
+    }
+   
 }
 const getPjTraById = async (req, res) => {
     const {id_tra, id_pj} = req.params
@@ -10,7 +16,12 @@ const getPjTraById = async (req, res) => {
             personajesId_trabajosId: {personajesId: Number(id_pj), trabajosId: Number(id_tra)}
         }
     })
-    res.json(pjtra)
+    if(pjtra != null){
+        res.json(pjtra)
+    }
+    else{
+        res.status(500).send("No se encontro a ningún trabajor con las id's proporcionadas")
+    }
 }
 const createPjTra = async (req, res) => {
     try{

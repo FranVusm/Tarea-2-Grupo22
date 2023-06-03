@@ -40,8 +40,8 @@ model trabajos {
 }
 
 model personaje_tiene_trabajo {
-  id_trabajo    trabajos   @relation(fields: [trabajosId], references: [id])
-  id_personaje    personajes @relation(fields: [personajesId], references: [id])
+  id_trabajo    trabajos   @relation(fields: [trabajosId], references: [id],onDelete: Cascade)
+  id_personaje    personajes @relation(fields: [personajesId], references: [id],onDelete: Cascade)
   personajesId  Int
   trabajosId    Int
   fecha_inicio  DateTime   @db.Date
@@ -62,9 +62,9 @@ model reinos {
 }
 
 model pesonaje_habita_reino {
-  id_personaje   personajes @relation(fields: [personajesId], references: [id])
+  id_personaje   personajes @relation(fields: [personajesId], references: [id],onDelete: Cascade)
   personajesId   Int
-  id_reino       reinos     @relation(fields: [reinosId], references: [id])
+  id_reino       reinos     @relation(fields: [reinosId], references: [id],onDelete: Cascade)
   reinosId       Int
   fecha_registro DateTime
   es_gobernate   Boolean
@@ -73,9 +73,9 @@ model pesonaje_habita_reino {
 }
 
 model diplomacias {
-  id_reino_1 reinos  @relation("reino 1", fields: [reinos1], references: [id])
+  id_reino_1 reinos  @relation("reino 1", fields: [reinos1], references: [id],onDelete: Cascade)
   reinos1    Int
-  id_reino_2 reinos  @relation("reino 2", fields: [reinos2], references: [id])
+  id_reino_2 reinos  @relation("reino 2", fields: [reinos2], references: [id],onDelete: Cascade)
   reinos2    Int
   es_aliado Boolean
 

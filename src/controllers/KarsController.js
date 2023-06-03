@@ -1,17 +1,27 @@
 import prisma from '../prismaClient.js'
 
 const getKart = async (req , res) => {
-    const reinos = await prisma.reinos.findMany()
-    res.json(reinos)
+    const karts = await prisma.karts.findMany()
+    if(karts.length == 0){
+        res.status(500).send("no se encontro ningún elemento ");
+    }
+    if(karts.length != 0){
+        res.json(karts)
+    }
 }
 const getKartById = async (req, res) => {
-    const { personajesId } = req.params
-    const reinos = await prisma.reinos.findUnique({
+    const { id } = req.params
+    const karts = await prisma.karts.findUnique({
         where: {
-            id: Number(personajesId)
+            id: Number(id)
         }
     })
-    res.json(reinos)
+    if(karts != null){
+        res.json(karts)
+    }
+    else{
+        res.status(500).send("No encontro ningun kart con la id dada")
+    }
 }
 const createKart = async (req, res) => {
     const {modelo, color, velocidad_maxima,personajesId} = req.body
@@ -33,11 +43,11 @@ const createKart = async (req, res) => {
     
 }
 const updateKart = async (req, res) => {
-    const {personajesId} = req.params
+    const {id} = req.params
     try{
         const update = await prisma.karts.update({
             where: {
-                id: Number(personajesId)
+                id: Number(id)
             },
             data: req.body
         })
@@ -49,10 +59,10 @@ const updateKart = async (req, res) => {
 }
 const deleteKart = async (req, res) => {
     try{
-        const {personajesId} = req.params
+        const {id} = req.params
         const deleteKart = await prisma.karts.delete({
             where: {
-                id: Number(personajesId)
+                id: Number(id)
             }
         })
         res.json(deleteKart)

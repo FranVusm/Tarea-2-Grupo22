@@ -2,7 +2,12 @@ import prisma from '../prismaClient.js'
 const GetDef = async (req, res) => {
     
     const getdef = await prisma.defensas.findMany()
-    res.json(getdef)
+    if(getdef != []){
+        res.json(getdef)
+    }
+    else{
+        res.status(500).send("No se encontro a ninguna defensa");
+    }
     
 }
 
@@ -11,7 +16,12 @@ const GetDefById = async (req,res) => {
         const def = await prisma.defensas.findUnique({
             where: {id: Number(id_def)}
         })
-    res.json(def)
+        if(def != null){
+            res.json(def)
+        }
+        else{
+            res.status(500).send("No se encontro defensa alguna con la id proporcionada")
+        }    
     
 }
 

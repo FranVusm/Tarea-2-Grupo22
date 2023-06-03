@@ -1,7 +1,12 @@
 import prisma from '../prismaClient.js'
 const getTra = async (req , res) => {
     const personajes = await prisma.trabajos.findMany()
-    res.json(personajes)
+    if(personajes.length == 0){
+        res.status(500).send("no se encontro ningún elemento ");
+    }
+    if(personajes.length != 0){
+        res.json(personajes)
+    }
 }
 
 const getTraById = async (req, res) => {
@@ -11,7 +16,12 @@ const getTraById = async (req, res) => {
             id: Number(id)
         }
     })
-    res.json(trabajos)
+    if(trabajos != null){
+        res.json(trabajos)
+    }
+    else{
+        res.status(500).send("No se encontro ningún trabajador con la id proporcionada")
+    }
 }
 
 const createTrabajo = async (req,res) => {

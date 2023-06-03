@@ -1,7 +1,12 @@
 import prisma from '../prismaClient.js'
 const getPjReino = async (req , res) => {
-    const pjtra = await prisma.pesonaje_habita_reino.findMany()
-    res.json(pjtra)
+    const PjReino = await prisma.pesonaje_habita_reino.findMany()
+    if(PjReino.length == 0){
+        res.status(500).send("no se encontro ningún elemento ");
+    }
+    if(PjReino.length != 0){
+        res.json(PjReino)
+    }
 }
 
 const getPjReinoId = async (req, res) => {
@@ -10,8 +15,13 @@ const getPjReinoId = async (req, res) => {
         where: 
         {personajesId_reinosId:{personajesId : Number(id_1), reinosId: Number(id_2) }}
     }) 
-    res.json(PjReino)}
-
+    if(PjReino != null){
+        res.json(PjReino)
+    }
+    else{
+        res.status(500).send("No se encontro a ningún ciudadano con las id's proporcionadas")
+    }
+}
 const createPjReino = async (req, res) => { 
     try{
         const {reinosId, personajesId,fecha_registro, es_gobernate} = req.body
@@ -55,7 +65,7 @@ const deletePjReino = async (req, res) => {
         res.json(deletePjReino)
     }
     catch(error){
-        res.status(500).send("error al actualizar, favor de revisar los parametros");
+        res.status(500).send("error al eliminar, favor de revisar los parametros");
     }
 }
 const PjReinoController = {
