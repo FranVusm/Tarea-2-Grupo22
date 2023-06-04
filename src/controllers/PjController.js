@@ -38,11 +38,12 @@ const getPjById = async (req, res) => {
 const createPj = async (req, res) => {
     try {
         const {nombre,fuerza, fecha_nacimiento, objeto} = req.body
+        
         const personajes = await prisma.personajes.create({
             data :{
                 nombre,
                 fuerza,
-                fecha_nacimiento,
+                fecha_nacimiento: new Date(fecha_nacimiento),
                 objeto,
             }
         })
@@ -151,7 +152,6 @@ const Reino_gob = async(req,res) =>{
 })
     res.json(persona)
 }  
-
 const Reino_gob2 = async(req,res) =>{
     const {id} = req.params
     const reinos1 = await prisma.pesonaje_habita_reino.findMany({

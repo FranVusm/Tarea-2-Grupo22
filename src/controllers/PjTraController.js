@@ -30,8 +30,8 @@ const createPjTra = async (req, res) => {
         data :{
             id_trabajo:{connect:{id:trabajosId}},
             id_personaje:{connect:{id:personajesId}},
-            fecha_inicio,
-            fecha_termino,
+            fecha_inicio: new Date(fecha_inicio),
+            fecha_termino: new Date(fecha_termino),
         }
     })
     res.json(personajesTra)}

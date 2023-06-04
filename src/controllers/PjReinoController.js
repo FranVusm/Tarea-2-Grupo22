@@ -24,12 +24,13 @@ const getPjReinoId = async (req, res) => {
 }
 const createPjReino = async (req, res) => { 
     try{
-        const {reinosId, personajesId,fecha_registro, es_gobernate} = req.body
+        const {reinosId, personajesId, es_gobernate} = req.body
+        
         const PjReino = await prisma.pesonaje_habita_reino.create({
             data :{
                 id_reino:{connect:{id: Number(reinosId)}},
                 id_personaje:{connect:{id: Number(personajesId)}},
-                fecha_registro,
+                fecha_registro: new Date( ),
                 es_gobernate,
             }
         })
