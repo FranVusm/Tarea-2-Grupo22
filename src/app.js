@@ -8,6 +8,8 @@ import ReinosController from './controllers/ReinosController.js';
 import DiploController from './controllers/DiploController.js';
 import PjReinoController from './controllers/PjReinoController.js';
 import DefensasController from './controllers/DefensasController.js';
+import dotenv from 'dotenv';
+dotenv.config();
 const ENV = process.env;
 const app = express();
 
@@ -64,11 +66,17 @@ app.post('/defensas/:id_reino',DefensasController.createDef)
 app.put('/defensas/:id_def', DefensasController.UpdateDef)
 app.delete('/defensas/:id_def', DefensasController.DeleteDef)
 
-
+app.get('/PjFuertes5', PjController.PjFuertes5)
+app.get('/PjKarts',PjController.KartsMas)
+app.get('/cantidadHabitantes/:id', PjController.Pjporreion)
+app.get('/gobernante', PjController.Reino_gob)
+app.get('/gobernante/:id', PjController.Reino_gob2)
 //==========================================================//
 app.get('/', (req, res) => {
     res.json({ message: 'Hello World!!' });
 })
+
+
 //==========================================================//
 
 

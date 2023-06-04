@@ -86,14 +86,105 @@ const deletePj = async (req, res) => {
     }
 }
 
+const PjFuertes5 =  async  (req,res) => {
+    try{
+        const personaje = await prisma.personajes.findMany({
+            take: 5,
+            orderBy: {
+                  fuerza: 'desc',
+            }}
+        )
+        res.json(personaje)
+    }
+    catch(error){
+        res.status(500).send("No se encontro a ningún personaje con la id proporcionada")
+    }
+}
+const KartsMas = async (req,res) => {
+    const personajes = await prisma.personajes.findMany({
+    take:1,
+      include: {
+        _count:{
+            select:{
+                karts: true
+            }
+        }
+      }})
+    const {nombre, _count} = personajes[0]
+     res.json({
+        nombre,
+        cantidad: _count.karts
+     })
+    
+    
+}
+const  Pjporreion = async(req, res) =>{
+    const {id} = req.params
+    const pjReino = await prisma.reinos.findMany({
+        where:{
+            id: Number(id)
+        },
+        include:{
+            _count:{
+                select:{pesonaje_habita_reino: true}
+            }
+        }
+    })
+    const {nombre, _count} = pjReino[0]
+    res.json({
+       nombre,
+       cantidad: _count.pesonaje_habita_reino
+    })  
+}
+const Reino_gob = async(req,res) =>{
+    const persona = await prisma.personajes.findMany({
+        where:{
+            pesonaje_habita_reino:{
+                some:{
+                    es_gobernate: true
+               }
+            }
+        },
+        select:{
+            nombre: true
+        }
+})
+    res.json(persona)
+}  
 
-            
+const Reino_gob2 = async(req,res) =>{
+    const {id} = req.params
+    const reinos1 = await prisma.pesonaje_habita_reino.findMany({
+        where:{
+            reinosId: Number(id),
+            es_gobernate: true    
+        },
+        select:{
+            id_personaje:{
+                select:{
+                    nombre: true
+                }
+            }
+        }
+    })
+    let hola;
+
+    hola = reinos1.map((x)=>
+        x.id_personaje
+    )
+    res.json(hola)
+}
 const PjController = {
     getPj,
     getPjById,
     createPj, 
     updatePj,
-    deletePj
+    deletePj,
+    PjFuertes5,
+    KartsMas,
+    Pjporreion,
+    Reino_gob,
+    Reino_gob2
 }
 
 export default PjController
