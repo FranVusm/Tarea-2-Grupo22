@@ -1,11 +1,11 @@
 import prisma from '../prismaClient.js'
 const getDiplo = async (req , res) => {
-    const pjtra = await prisma.diplomacias.findMany()
-    if(pjtra.length == 0){
-        res.status(500).send("no se encontro ningún elemento ");
+    const diplo = await prisma.diplomacias.findMany()
+    if(diplo.length == 0){
+        res.status(404 ).send("no se encontro ningún elemento ");
     }
-    if(pjtra.length != 0){
-        res.json(pjtra)
+    if(diplo.length != 0){
+        res.json(diplo)
     }
 }
 const getdiploById = async (req, res) => {
@@ -19,7 +19,7 @@ const getdiploById = async (req, res) => {
         res.json(diplo)
     }
     else{
-        res.status(500).send("No se encontro diplomacia con las id proporcionadas")
+        res.status(404).send("No se encontro diplomacia con las id proporcionadas")
     }
 }
 const createDiplo = async (req, res) => {
@@ -35,7 +35,7 @@ const createDiplo = async (req, res) => {
         res.json(diplo)
     }
     catch(error){
-        res.status(500).send("error al crear la diplomacia, favor de revisar los parametros");
+        res.status(404).send("error al crear la diplomacia, favor de revisar los parametros");
     }
 }
 const updateDiplo = async (req, res) => {
@@ -50,12 +50,12 @@ const updateDiplo = async (req, res) => {
     res.json(update)
 }
     catch(error){
-        res.status(500).send("error al actualizar, favor de revisar los parametros");
+        res.status(404).send("error al actualizar, favor de revisar los parametros");
     }
 }
 const deleteDiplo = async (req, res) => {
     try{
-    const {id} = req.params
+    const {id_1,id_2} = req.params
     const deletePjTra = await prisma.diplomacias.delete({
         where: {
             reinos1_reinos2: {reinos1 : Number(id_1), reinos2: Number(id_2) }
@@ -64,7 +64,7 @@ const deleteDiplo = async (req, res) => {
     res.json(deletePjTra)
     }
     catch(error){
-        res.status(500).send("error al eliminar, favor de revisar los parametros");
+        res.status(404).send("error al eliminar, favor de revisar los parametros");
     }
 }
 

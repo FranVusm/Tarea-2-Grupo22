@@ -4,15 +4,14 @@ const getPj = async (req , res) => {
     
         const personajes = await prisma.personajes.findMany()
         if(personajes.length == 0){
-            res.status(500).send("no se encontro ningún elemento ");
+            res.status(404).send("no se encontro ningún elemento ");
         }
         if(personajes.length != 0){
             res.json(personajes)
         }
     
    
-}
-//personajes por id doy una id que no exista que pasa... 
+} 
 const getPjById = async (req, res) => {
    
         const { id } = req.params
@@ -27,14 +26,14 @@ const getPjById = async (req, res) => {
             res.json(personajes)
         }
         else{
-            res.status(500).send("No se encontro ningun personaje con la id proporcionada")
+            res.status(404).send("No se encontro ningun personaje con la id proporcionada")
         }
 }
     
        
    
  
-//creador de personaje, que no el body necesario
+ 
 const createPj = async (req, res) => {
     try {
         const {nombre,fuerza, fecha_nacimiento, objeto} = req.body
@@ -50,28 +49,38 @@ const createPj = async (req, res) => {
         res.json(personajes)
     }
     catch(error){
-        res.status(500).send("No se puedo Crear al personaje, revise los parametros dados")
+        res.status(404).send("No se puedo Crear al personaje, revise los parametros dados")
     }
     
 }
-//update de personaje, si no existe la id ...
+ 
 const updatePj = async (req, res) => {
     try{
         const {id} = req.params
+        const {fecha_nacimiento, fuerza, nombre, objeto} = req.body
+        const fechaNacimiento = fecha_nacimiento ? new Date(fecha_nacimiento) : undefined
+        const fuerza1 = fuerza ? fuerza : undefined
+        const nombre1 = nombre ? nombre : undefined
+        const objeto1 = objeto ? objeto : undefined
         const update = await prisma.personajes.update({
             where: {
                 id: Number(id)
             },
-            data: req.body
+            data:{
+                fecha_nacimiento: fechaNacimiento,
+                fuerza: fuerza1,
+                nombre: nombre1,
+                objeto: objeto1
+            }
         })
         res.json(update)
     }
     catch(error){
-        res.status(500).send("No se encontro a ningún personaje con la id proporcionada")
+        res.status(404).send("No se encontro a ningún personaje con la id proporcionada")
     }
     
 }
-//delete de personaje, si no existe la id que pasa...
+ 
 const deletePj = async (req, res) => {
     try{
         const {id} = req.params
@@ -83,7 +92,7 @@ const deletePj = async (req, res) => {
         res.json(deletepj)
     }
     catch(error){
-        res.status(500).send("No se encontro a ningún personaje con la id proporcionada")
+        res.status(404).send("No se encontro a ningún personaje con la id proporcionada")
     }
 }
 
@@ -98,10 +107,11 @@ const PjFuertes5 =  async  (req,res) => {
         res.json(personaje)
     }
     catch(error){
-        res.status(500).send("No se encontro a ningún personaje con la id proporcionada")
+        res.status(404).send("No se encontraron personajes")
     }
 }
 const KartsMas = async (req,res) => {
+    try{
     const personajes = await prisma.personajes.findMany({
     take:1,
       include: {
@@ -115,11 +125,15 @@ const KartsMas = async (req,res) => {
      res.json({
         nombre,
         cantidad: _count.karts
-     })
+     })}
+     catch(error){
+        res.status(404).send("No se encontraron personajes con karts")
+     }
     
     
 }
 const  Pjporreion = async(req, res) =>{
+    try{
     const {id} = req.params
     const pjReino = await prisma.reinos.findMany({
         where:{
@@ -135,9 +149,13 @@ const  Pjporreion = async(req, res) =>{
     res.json({
        nombre,
        cantidad: _count.pesonaje_habita_reino
-    })  
+    }) }
+    catch(error){
+        res.status(404).send("No se encontro reino con la id proporcionada")
+    } 
 }
 const Reino_gob = async(req,res) =>{
+    try{
     const persona = await prisma.personajes.findMany({
         where:{
             pesonaje_habita_reino:{
@@ -150,9 +168,13 @@ const Reino_gob = async(req,res) =>{
             nombre: true
         }
 })
-    res.json(persona)
+    res.json(persona)}
+    catch(error){
+        res.status(404).send("No se encontraron personajes gobernantes o reinos")
+    }
 }  
 const Reino_gob2 = async(req,res) =>{
+    try{
     const {id} = req.params
     const reinos1 = await prisma.pesonaje_habita_reino.findMany({
         where:{
@@ -172,7 +194,10 @@ const Reino_gob2 = async(req,res) =>{
     hola = reinos1.map((x)=>
         x.id_personaje
     )
-    res.json(hola)
+    res.json(hola)}
+    catch(error){
+        res.status(404).send("No se encontro reino con la id proporcionada")
+    }
 }
 const PjController = {
     getPj,

@@ -3,7 +3,7 @@ import prisma from '../prismaClient.js'
 const getReino = async (req , res) => {
     const reinos = await prisma.reinos.findMany()
     if(reinos.length == 0){
-        res.status(500).send("no se encontro ningún elemento ");
+        res.status(404).send("no se encontro ningún elemento ");
     }
     if(reinos.length != 0){
         res.json(reinos)
@@ -20,7 +20,7 @@ const getReinosById = async (req, res) => {
         res.json(reinos)
     }
     else{
-        res.status(500).send("No se encontro nigún reino con la id proporcionada")
+        res.status(404).send("No se encontro nigún reino con la id proporcionada")
     }
 }
 const createReino = async (req, res) => {
@@ -35,7 +35,7 @@ const createReino = async (req, res) => {
     })
     res.json(reinos)}
     catch(error){
-        res.status(500).send("error al crear el Reino, favor de revisar los parametros");
+        res.status(404).send("error al crear el Reino, favor de revisar los parametros");
     }
 }
 const updateReino = async (req, res) => {
@@ -49,7 +49,7 @@ const updateReino = async (req, res) => {
     })
     res.json(update)}
     catch(error){
-        res.status(500).send("error al actualizar, favor de revisar los parametros");
+        res.status(404).send("error al actualizar, favor de revisar los parametros");
     }
 }
 const deleteReinos = async (req, res) => {
@@ -63,7 +63,7 @@ const deleteReinos = async (req, res) => {
     })
     res.json(deleteReinos)}
     catch(error){
-        res.status(500).send("error al eliminar, favor de revisar los parametros");
+        res.status(404).send("error al eliminar, favor de revisar los parametros");
     }
    
 }

@@ -2,13 +2,12 @@ import prisma from '../prismaClient.js'
 const GetDef = async (req, res) => {
     
     const getdef = await prisma.defensas.findMany()
-    if(getdef != []){
+    if(getdef.length == 0){
+        res.status(404).send("no se encontro ningún elemento ");
+    }
+    if(getdef.length != 0){
         res.json(getdef)
     }
-    else{
-        res.status(500).send("No se encontro a ninguna defensa");
-    }
-    
 }
 
 const GetDefById = async (req,res) => {
@@ -20,7 +19,7 @@ const GetDefById = async (req,res) => {
             res.json(def)
         }
         else{
-            res.status(500).send("No se encontro defensa alguna con la id proporcionada")
+            res.status(404).send("No se encontro defensa alguna con la id proporcionada")
         }    
     
 }
@@ -35,7 +34,7 @@ const createDef = async (req, res) => {
              })
         }
         catch(error){
-            res.status(500).send("No se encontro a un Reino con la Id proporcionada");
+            res.status(404).send("No se encontro a un Reino con la Id proporcionada");
         }
    
     const def_reinos = await prisma.defensas.create({
@@ -50,7 +49,7 @@ const createDef = async (req, res) => {
 }
     catch(error){
        
-        res.status(500).send("Ocurrió un error al crear la relación");
+        res.status(404).send("Ocurrió un error al crear la relación");
 
     }}
 const UpdateDef = async(req,res) => {
@@ -63,7 +62,7 @@ const UpdateDef = async(req,res) => {
         res.json(update)
     }
     catch(error){
-        res.status(500).send("error al actualizar, favor de revisar los parametros");
+        res.status(404).send("error al actualizar, favor de revisar los parametros");
     }
 }
 const DeleteDef = async(req,res) =>{
@@ -75,7 +74,7 @@ const DeleteDef = async(req,res) =>{
         res.json(deletedef)
     }
     catch(error){
-        res.status(500).send("error al eliminar, favor de revisar los parametros");
+        res.status(404).send("error al eliminar, favor de revisar los parametros");
     }
 }
 const DefensasController = {

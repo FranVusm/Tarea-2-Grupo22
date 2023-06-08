@@ -2,7 +2,7 @@ import prisma from '../prismaClient.js'
 const getPjTra = async (req , res) => {
     const pjtra = await prisma.personaje_tiene_trabajo.findMany()
     if(pjtra.length == 0){
-        res.status(500).send("no se encontro ningún elemento ");
+        res.status(404).send("no se encontro ningún elemento ");
     }
     if(pjtra.length != 0){
         res.json(pjtra)
@@ -20,7 +20,7 @@ const getPjTraById = async (req, res) => {
         res.json(pjtra)
     }
     else{
-        res.status(500).send("No se encontro a ningún trabajor con las id's proporcionadas")
+        res.status(404).send("No se encontro a ningún trabajor con las id's proporcionadas")
     }
 }
 const createPjTra = async (req, res) => {
@@ -36,21 +36,29 @@ const createPjTra = async (req, res) => {
     })
     res.json(personajesTra)}
     catch(error){
-        res.status(500).send("error al crear trabajador, favor de revisar los parametros");
+        res.status(404).send("error al crear trabajador, favor de revisar los parametros");
     }
 }
+ 
 const updatePjTra = async (req, res) => {
-    const {id_pj,id_tra} = req.params
     try{
-    const update = await prisma.personaje_tiene_trabajo.update({
+    const {id_pj,id_tra} = req.params
+     const {fecha_inicio,fecha_termino} = req.body
+     const fechaInicio = fecha_inicio ? new Date(fecha_inicio) : undefined
+     const fechaTermino = fecha_termino ? new Date(fecha_termino) : undefined
+
+     const update_ = await prisma.personaje_tiene_trabajo.update({
         where: {
             personajesId_trabajosId: {personajesId: Number(id_pj), trabajosId: Number(id_tra)}
         },
-        data: req.body
+        data:{
+            fecha_inicio: fechaInicio,
+            fecha_termino: fechaTermino
+        }
     })
-    res.json(update)}
+    res.json(update_)}
     catch(error){
-        res.status(500).send("error al actualizar, favor de revisar los parametros");
+        res.status(404).send("error al actualizar el trabajo del personaje, favor de revisar los parametros");
     }
 }
 const deletePjTra = async (req, res) => {
@@ -63,7 +71,7 @@ const deletePjTra = async (req, res) => {
     })
     res.json(deletePjTra)}
     catch(error){
-        res.status(500).send("error al eliminar, favor de revisar los parametros");
+        res.status(404).send("error al eliminar, favor de revisar los parametros");
     }
 }
 

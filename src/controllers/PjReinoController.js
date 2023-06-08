@@ -2,7 +2,7 @@ import prisma from '../prismaClient.js'
 const getPjReino = async (req , res) => {
     const PjReino = await prisma.pesonaje_habita_reino.findMany()
     if(PjReino.length == 0){
-        res.status(500).send("no se encontro ningún elemento ");
+        res.status(404).send("no se encontro ningún elemento ");
     }
     if(PjReino.length != 0){
         res.json(PjReino)
@@ -19,7 +19,7 @@ const getPjReinoId = async (req, res) => {
         res.json(PjReino)
     }
     else{
-        res.status(500).send("No se encontro a ningún ciudadano con las id's proporcionadas")
+        res.status(404).send("No se encontro a ningún ciudadano con las id's proporcionadas")
     }
 }
 const createPjReino = async (req, res) => { 
@@ -37,7 +37,7 @@ const createPjReino = async (req, res) => {
         res.json(PjReino)
     }
    catch(error){
-    res.status(500).send("error al crear ciudadano, favor de revisar los parametros");
+    res.status(404).send("error al crear ciudadano, favor de revisar los parametros");
    }
 }
 const updatePjReino = async (req, res) => {
@@ -52,7 +52,7 @@ const updatePjReino = async (req, res) => {
         res.json(update)
     }
     catch(error){
-        res.status(500).send("error al actualizar, favor de revisar los parametros");
+        res.status(404).send("error al actualizar, favor de revisar los parametros");
     }
 }
 const deletePjReino = async (req, res) => {
@@ -66,7 +66,7 @@ const deletePjReino = async (req, res) => {
         res.json(deletePjReino)
     }
     catch(error){
-        res.status(500).send("error al eliminar, favor de revisar los parametros");
+        res.status(404).send("error al eliminar, favor de revisar los parametros");
     }
 }
 const PjReinoController = {

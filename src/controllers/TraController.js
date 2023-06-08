@@ -2,7 +2,7 @@ import prisma from '../prismaClient.js'
 const getTra = async (req , res) => {
     const personajes = await prisma.trabajos.findMany()
     if(personajes.length == 0){
-        res.status(500).send("no se encontro ningún elemento ");
+        res.status(404).send("no se encontro ningún elemento ");
     }
     if(personajes.length != 0){
         res.json(personajes)
@@ -20,7 +20,7 @@ const getTraById = async (req, res) => {
         res.json(trabajos)
     }
     else{
-        res.status(500).send("No se encontro ningún trabajador con la id proporcionada")
+        res.status(404).send("No se encontro ningún trabajador con la id proporcionada")
     }
 }
 
@@ -35,7 +35,7 @@ const createTrabajo = async (req,res) => {
     })
     res.json(trabajos)}
     catch(error){
-        res.status(500).send("error al crear un trabajo, favor de revisar los parametros");
+        res.status(404).send("error al crear un trabajo, favor de revisar los parametros");
     }
 }
 
@@ -50,7 +50,7 @@ const updateTra = async (req, res) => {
     })
     res.json(update)}
     catch(error){
-        res.status(500).send("error al actualizar, favor de revisar los parametros");
+        res.status(404).send("error al actualizar, favor de revisar los parametros");
     }
 }
 
@@ -64,7 +64,7 @@ const deleteTra = async (req, res) => {
     })
     res.json(deletetra)}
     catch(error){
-        res.status(500).send("error al eliminar, favor de revisar los parametros");
+        res.status(404).send("error al eliminar, favor de revisar los parametros");
     }
 }
 

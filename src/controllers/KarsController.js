@@ -3,7 +3,7 @@ import prisma from '../prismaClient.js'
 const getKart = async (req , res) => {
     const karts = await prisma.karts.findMany()
     if(karts.length == 0){
-        res.status(500).send("no se encontro ningún elemento ");
+        res.status(404).send("no se encontro ningún elemento ");
     }
     if(karts.length != 0){
         res.json(karts)
@@ -20,7 +20,7 @@ const getKartById = async (req, res) => {
         res.json(karts)
     }
     else{
-        res.status(500).send("No encontro ningun kart con la id dada")
+        res.status(404).send("No encontro ningun kart con la id dada")
     }
 }
 const createKart = async (req, res) => {
@@ -38,7 +38,7 @@ const createKart = async (req, res) => {
     
     }
     catch(error){
-        res.status(500).send("error al crear el kart, favor de revisar los parametros");
+        res.status(404).send("error al crear el kart, favor de revisar los parametros");
     }
     
 }
@@ -54,7 +54,7 @@ const updateKart = async (req, res) => {
         res.json(update)
     }
     catch(error){
-        res.status(500).send("error al actualizar, favor de revisar los parametros");
+        res.status(404).send("error al actualizar, favor de revisar los parametros");
     }
 }
 const deleteKart = async (req, res) => {
@@ -69,7 +69,7 @@ const deleteKart = async (req, res) => {
     }
    
     catch(error){
-        res.status(500).send("error al eliminar, favor de revisar los parametros");
+        res.status(404).send("error al eliminar, favor de revisar los parametros");
     }
 }
 
