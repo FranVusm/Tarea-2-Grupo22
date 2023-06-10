@@ -43,11 +43,15 @@ const createPjReino = async (req, res) => {
 const updatePjReino = async (req, res) => {
     try{
         const {id_1,id_2} = req.params
+        const {es_gobernate} = req.body
+        const es_gobernate1 = es_gobernate ? es_gobernate : undefined
         const update = await prisma.pesonaje_habita_reino.update({
             where: {
                 personajesId_reinosId:{personajesId : Number(id_1), reinosId: Number(id_2) }
             },
-            data: req.body
+            data: {
+                es_gobernate: es_gobernate1
+            }
         })
         res.json(update)
     }

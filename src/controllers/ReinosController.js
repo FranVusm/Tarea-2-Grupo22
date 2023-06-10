@@ -41,11 +41,19 @@ const createReino = async (req, res) => {
 const updateReino = async (req, res) => {
     try{
     const {id} = req.params
+    const {nombre, ubicacion, superficie} = req.body
+    const nombre1 = nombre ? nombre : undefined
+    const ubicacion1 = ubicacion ? ubicacion : undefined
+    const superficie1 = superficie ? superficie : undefined
     const update = await prisma.reinos.update({
         where: {
             id: Number(id)
         },
-        data: req.body
+        data: {
+            nombre: nombre1,
+            ubicacion: ubicacion1,
+            superficie: superficie1
+        }
     })
     res.json(update)}
     catch(error){

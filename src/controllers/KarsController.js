@@ -44,18 +44,23 @@ const createKart = async (req, res) => {
 }
 const updateKart = async (req, res) => {
     const {id} = req.params
-    try{
+    const {modelo, color, velocidad_maxima} = req.body
+    const modelo1 = modelo ? modelo : undefined
+    const color1 = color ? color : undefined
+    const velocidad_maxima1 = velocidad_maxima ? velocidad_maxima : undefined
+    
         const update = await prisma.karts.update({
             where: {
                 id: Number(id)
             },
-            data: req.body
+            data: {
+                modelo: modelo1,
+                color: color1,
+                velocidad_maxima: velocidad_maxima1
+            }
         })
         res.json(update)
-    }
-    catch(error){
-        res.status(404).send("error al actualizar, favor de revisar los parametros");
-    }
+     
 }
 const deleteKart = async (req, res) => {
     try{

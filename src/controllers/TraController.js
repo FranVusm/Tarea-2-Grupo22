@@ -42,11 +42,17 @@ const createTrabajo = async (req,res) => {
 const updateTra = async (req, res) => {
     try{
     const {id} = req.params
+    const {descripcion, sueldo} = req.body
+    const descripcion1 = descripcion ? descripcion : undefined
+    const sueldo1 = sueldo ? nomsueldobre : undefined
     const update = await prisma.trabajos.update({
         where: {
             id: Number(id)
         },
-        data: req.body
+        data: {
+            descripcion: descripcion1,
+            sueldo: sueldo1
+        }
     })
     res.json(update)}
     catch(error){
@@ -57,6 +63,8 @@ const updateTra = async (req, res) => {
 const deleteTra = async (req, res) => {
     try{
     const {id} = req.params
+  
+    
     const deletetra = await prisma.trabajos.delete({
         where: {
             id: Number(id)
